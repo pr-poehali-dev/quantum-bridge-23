@@ -14,92 +14,79 @@ export function HeroSection() {
     offset: ["start start", "end start"],
   })
 
-  const rotate1 = useTransform(scrollYProgress, [0, 1], [0, -15])
-  const rotate2 = useTransform(scrollYProgress, [0, 1], [0, 0])
-  const rotate3 = useTransform(scrollYProgress, [0, 1], [0, 15])
-  const x1 = useTransform(scrollYProgress, [0, 1], [0, -200])
-  const x3 = useTransform(scrollYProgress, [0, 1], [0, 200])
-  const y = useTransform(scrollYProgress, [0, 1], [0, 100])
+  const rotate1 = useTransform(scrollYProgress, [0, 0.5], [0, -22])
+  const rotate3 = useTransform(scrollYProgress, [0, 0.5], [0, 22])
+  const x1 = useTransform(scrollYProgress, [0, 0.5], [0, -320])
+  const x3 = useTransform(scrollYProgress, [0, 0.5], [0, 320])
+  const y = useTransform(scrollYProgress, [0, 0.5], [0, 140])
 
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background px-6 py-24"
+      className="relative min-h-screen flex flex-col items-center overflow-hidden bg-background"
     >
-      {/* Subtle background glow */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/8 rounded-full blur-3xl" />
-      </div>
+      {/* Title block — at top, clearly separated from images */}
+      <motion.div
+        className="relative z-20 text-center px-6 pt-16 pb-8"
+        initial={{ opacity: 0, y: -24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, delay: 0.3 }}
+      >
+        <p className="text-xs uppercase tracking-[0.4em] text-primary/60 mb-3 font-sans font-light">
+          визажист · москва
+        </p>
+        <h1
+          className="text-6xl md:text-8xl lg:text-[108px] font-serif leading-none select-none"
+          style={{
+            background: "linear-gradient(135deg, #c9907a 0%, #e8b8c5 40%, #d4a5b8 70%, #b87e8a 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+        >
+          LUMIÈRE
+        </h1>
+        <p className="text-sm tracking-[0.28em] text-foreground/40 mt-3 font-sans font-light">
+          by Alexandra
+        </p>
+      </motion.div>
 
-      {/* Stacked images */}
-      <div className="relative flex items-center justify-center">
+      {/* Images — clearly below title */}
+      <div className="relative flex items-center justify-center flex-1 w-full min-h-[400px]">
         <motion.div
-          className="absolute w-[240px] md:w-[300px] aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl"
+          className="absolute w-[200px] md:w-[270px] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl"
           style={{ rotate: rotate1, x: x1, y, zIndex: 1 }}
           initial={{ clipPath: "inset(100% 0 0 0)" }}
           animate={{ clipPath: "inset(0 0 0 0)" }}
           transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
-          <img
-            src={images[0]}
-            alt="Работа визажиста 1"
-            className="w-full h-full object-cover object-top"
-            loading="eager"
-          />
+          <img src={images[0]} alt="Работа визажиста 1" className="w-full h-full object-cover object-top" loading="eager" />
         </motion.div>
 
         <motion.div
-          className="relative w-[240px] md:w-[300px] aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl"
-          style={{ rotate: rotate2, y, zIndex: 2 }}
+          className="relative w-[200px] md:w-[270px] aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl"
+          style={{ y, zIndex: 2 }}
           initial={{ clipPath: "inset(100% 0 0 0)" }}
           animate={{ clipPath: "inset(0 0 0 0)" }}
           transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
         >
-          <img
-            src={images[1]}
-            alt="Работа визажиста 2"
-            className="w-full h-full object-cover object-top"
-            loading="eager"
-          />
+          <img src={images[1]} alt="Работа визажиста 2" className="w-full h-full object-cover object-top" loading="eager" />
         </motion.div>
 
         <motion.div
-          className="absolute w-[240px] md:w-[300px] aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl"
+          className="absolute w-[200px] md:w-[270px] aspect-[3/4] rounded-2xl overflow-hidden shadow-xl"
           style={{ rotate: rotate3, x: x3, y, zIndex: 1 }}
           initial={{ clipPath: "inset(100% 0 0 0)" }}
           animate={{ clipPath: "inset(0 0 0 0)" }}
           transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          <img
-            src={images[2]}
-            alt="Работа визажиста 3"
-            className="w-full h-full object-cover object-top"
-            loading="eager"
-          />
+          <img src={images[2]} alt="Работа визажиста 3" className="w-full h-full object-cover object-top" loading="eager" />
         </motion.div>
       </div>
 
+      {/* Scroll indicator */}
       <motion.div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.8 }}
-      >
-        <div className="text-center">
-          <p className="text-xs uppercase tracking-[0.35em] text-primary/70 mb-4 font-sans font-light mix-blend-multiply">
-            визажист · москва
-          </p>
-          <h1 className="text-5xl md:text-7xl lg:text-9xl font-serif text-foreground mix-blend-multiply leading-none">
-            LUMIÈRE
-          </h1>
-          <p className="text-sm md:text-base tracking-[0.2em] text-foreground/60 mt-4 font-sans font-light mix-blend-multiply">
-            by Alexandra
-          </p>
-        </div>
-      </motion.div>
-
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="relative z-20 pb-8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}

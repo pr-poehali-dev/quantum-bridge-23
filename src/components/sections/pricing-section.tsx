@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { motion } from "framer-motion"
 import Icon from "@/components/ui/icon"
 
@@ -36,6 +37,8 @@ const services = [
 ]
 
 export function PricingSection() {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null)
+
   return (
     <section className="bg-secondary px-6 py-24">
       <div className="max-w-5xl mx-auto">
@@ -53,15 +56,24 @@ export function PricingSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, i) => (
+          {services.map((service, i) => {
+            const isActive = activeIndex === i
+            return (
             <motion.div
               key={i}
-              className={`relative bg-background rounded-2xl p-8 flex flex-col ${service.popular ? "ring-2 ring-primary md:col-span-1" : ""}`}
+              className={`relative rounded-2xl p-8 flex flex-col cursor-pointer transition-colors duration-300 ${
+                isActive
+                  ? "bg-primary text-primary-foreground ring-2 ring-primary/60"
+                  : service.popular
+                  ? "bg-background ring-2 ring-primary"
+                  : "bg-background"
+              }`}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
               whileHover={{ y: -4 }}
+              onClick={() => setActiveIndex(isActive ? null : i)}
               data-clickable
             >
               {service.popular && (
@@ -70,19 +82,19 @@ export function PricingSection() {
                 </span>
               )}
 
-              <div className="pb-6 border-b border-border/60">
-                <h3 className="font-serif text-xl text-foreground">{service.name}</h3>
+              <div className={`pb-6 border-b ${isActive ? "border-white/30" : "border-border/60"}`}>
+                <h3 className={`font-serif text-xl ${isActive ? "text-white" : "text-foreground"}`}>{service.name}</h3>
                 <div className="mt-3 flex items-baseline gap-1">
-                  <span className="text-4xl font-serif text-foreground">{service.price}</span>
-                  <span className="text-muted-foreground text-sm"> руб.</span>
+                  <span className={`text-4xl font-serif ${isActive ? "text-white" : "text-foreground"}`}>{service.price}</span>
+                  <span className={`text-sm ${isActive ? "text-white/70" : "text-muted-foreground"}`}> руб.</span>
                 </div>
-                <p className="text-muted-foreground text-xs mt-2 leading-relaxed">{service.description}</p>
+                <p className={`text-xs mt-2 leading-relaxed ${isActive ? "text-white/70" : "text-muted-foreground"}`}>{service.description}</p>
               </div>
 
               <ul className="mt-5 space-y-2.5 flex-1">
                 {service.features.map((feature, j) => (
-                  <li key={j} className="flex items-center gap-3 text-foreground">
-                    <Icon name="Check" size={14} className="text-primary flex-shrink-0" />
+                  <li key={j} className={`flex items-center gap-3 ${isActive ? "text-white" : "text-foreground"}`}>
+                    <Icon name="Check" size={14} className={`flex-shrink-0 ${isActive ? "text-white/80" : "text-primary"}`} />
                     <span className="text-sm">{feature}</span>
                   </li>
                 ))}
@@ -90,8 +102,11 @@ export function PricingSection() {
 
               <a
                 href="tel:+79881388714"
+                onClick={(e) => e.stopPropagation()}
                 className={`w-full mt-7 py-3 px-6 rounded-xl text-sm font-medium transition-all text-center block ${
-                  service.popular
+                  isActive
+                    ? "bg-white/20 text-white hover:bg-white/30 border border-white/30"
+                    : service.popular
                     ? "bg-primary text-primary-foreground hover:bg-primary/90"
                     : "bg-secondary text-foreground hover:bg-accent border border-border"
                 }`}
@@ -100,7 +115,8 @@ export function PricingSection() {
                 Записаться
               </a>
             </motion.div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>
