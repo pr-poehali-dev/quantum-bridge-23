@@ -50,13 +50,13 @@ export function CustomCursor() {
       transition={{ type: "spring", stiffness: 500, damping: 28 }}
     >
       <motion.div
-        className="rounded-full bg-iris"
+        className="rounded-full"
         animate={{
           width: isHovering ? 40 : 8,
           height: isHovering ? 40 : 8,
-          backgroundColor: isHovering ? "transparent" : "#5B21B6",
+          backgroundColor: isHovering ? "rgba(180, 100, 120, 0)" : "rgba(180, 100, 120, 1)",
           borderWidth: isHovering ? 1 : 0,
-          borderColor: "#5B21B6",
+          borderColor: "rgba(180, 100, 120, 1)",
         }}
         transition={{ duration: 0.2 }}
         style={{ borderStyle: "solid" }}
