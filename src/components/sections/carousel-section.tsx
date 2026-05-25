@@ -1,16 +1,14 @@
 import { motion } from "framer-motion"
 
 const portfolioItems = [
-  "/portfolio-website-design-preview-modern.jpg",
-  "/photography-portfolio-website-clean.jpg",
-  "/architecture-firm-website-minimal.jpg",
-  "/design-agency-portfolio-dark-theme.jpg",
-  "/artist-portfolio-website-creative.jpg",
-  "/writer-portfolio-website-elegant.jpg",
+  "https://cdn.poehali.dev/files/7256efa0-bb2a-4f17-9ce8-fd365059155c.JPG",
+  "https://cdn.poehali.dev/files/c44ad694-3ce6-47dc-adc1-a4e2d640cc55.JPG",
+  "https://cdn.poehali.dev/files/c26195e4-d293-4eb4-b024-c0e9f610396d.JPG",
+  "https://cdn.poehali.dev/files/56ca804e-5c9b-4c51-9d4a-981e735e5bdf.JPG",
+  "https://cdn.poehali.dev/files/d839c5ca-ad51-4198-82c9-e0023be74e82.JPG",
 ]
 
 export function CarouselSection() {
-  // Duplicate for seamless loop
   const items = [...portfolioItems, ...portfolioItems]
 
   return (
@@ -22,16 +20,16 @@ export function CarouselSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          Создано авторами для авторов.
+          Каждый образ — это <em className="italic">произведение искусства</em>.
         </motion.h2>
       </div>
 
       <div className="relative">
         <motion.div
-          className="flex gap-6"
+          className="flex gap-4"
           animate={{ x: [0, "-50%"] }}
           transition={{
-            duration: 30,
+            duration: 35,
             repeat: Infinity,
             ease: "linear",
           }}
@@ -39,13 +37,14 @@ export function CarouselSection() {
           {items.map((src, i) => (
             <div
               key={i}
-              className="flex-shrink-0 w-[300px] md:w-[400px] rounded-xl overflow-hidden shadow-2xl"
+              className="flex-shrink-0 w-[220px] md:w-[280px] h-[300px] md:h-[380px] rounded-2xl overflow-hidden shadow-xl"
               data-clickable
             >
               <img
-                src={src || "/placeholder.svg"}
-                alt={`Пример портфолио ${(i % portfolioItems.length) + 1}`}
-                className="w-full h-auto"
+                src={src}
+                alt={`Работа ${(i % portfolioItems.length) + 1}`}
+                className="w-full h-full object-cover object-top"
+                loading="lazy"
               />
             </div>
           ))}

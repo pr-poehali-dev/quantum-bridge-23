@@ -1,28 +1,28 @@
 import type React from "react"
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowRight } from "lucide-react"
+import Icon from "@/components/ui/icon"
 
-const articles = [
+const tips = [
   {
-    title: "Искусство визуального сторителлинга",
-    category: "Дизайн",
-    image: "/visual-storytelling-design-article.jpg",
+    title: "Как подготовить кожу к макияжу",
+    category: "Уход",
+    image: "https://cdn.poehali.dev/files/c26195e4-d293-4eb4-b024-c0e9f610396d.JPG",
   },
   {
-    title: "Как создать личный бренд онлайн",
-    category: "Стратегия",
-    image: "/personal-branding-digital-marketing.jpg",
+    title: "5 секретов стойкого свадебного образа",
+    category: "Свадьба",
+    image: "https://cdn.poehali.dev/files/c44ad694-3ce6-47dc-adc1-a4e2d640cc55.JPG",
   },
   {
-    title: "Тренды типографики 2025",
-    category: "Типографика",
-    image: "/typography-trends-modern-fonts.jpg",
+    title: "Лифтинг-макияж: молодость без уколов",
+    category: "Лифтинг",
+    image: "https://cdn.poehali.dev/files/7256efa0-bb2a-4f17-9ce8-fd365059155c.JPG",
   },
   {
-    title: "Минимализм в дизайне портфолио",
-    category: "Вдохновение",
-    image: "/placeholder.svg?height=200&width=300",
+    title: "Трендовый вечерний макияж 2025",
+    category: "Тренды",
+    image: "https://cdn.poehali.dev/files/d839c5ca-ad51-4198-82c9-e0023be74e82.JPG",
   },
 ]
 
@@ -38,20 +38,19 @@ export function InsightsSection() {
     <section className="bg-background px-6 py-24" onMouseMove={handleMouseMove}>
       <div className="max-w-4xl mx-auto">
         <motion.p
-          className="text-muted-foreground text-sm uppercase tracking-widest mb-8"
+          className="text-muted-foreground text-xs uppercase tracking-[0.3em] mb-8"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          Статьи
+          Советы и вдохновение
         </motion.p>
 
         <div className="divide-y divide-border">
-          {articles.map((article, i) => (
-            <motion.a
+          {tips.map((tip, i) => (
+            <motion.div
               key={i}
-              href="#"
-              className="group flex items-center justify-between py-6 relative"
+              className="group flex items-center justify-between py-6 relative cursor-pointer"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -62,35 +61,34 @@ export function InsightsSection() {
               data-clickable
             >
               <div className="flex-1">
-                <span className="text-xs text-muted-foreground uppercase tracking-wider">{article.category}</span>
-                <h3 className="font-serif text-xl md:text-2xl text-foreground mt-1 group-hover:text-primary transition-colors">
-                  {article.title}
+                <span className="text-xs text-primary/70 uppercase tracking-widest">{tip.category}</span>
+                <h3 className="font-serif text-xl md:text-2xl text-foreground mt-1 group-hover:text-primary transition-colors duration-300">
+                  {tip.title}
                 </h3>
               </div>
-              <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
-            </motion.a>
+              <Icon name="ArrowRight" size={18} className="text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-300 flex-shrink-0 ml-4" />
+            </motion.div>
           ))}
         </div>
 
-        {/* Floating hover image */}
         <AnimatePresence>
           {hoveredIndex !== null && (
             <motion.div
-              className="fixed pointer-events-none z-50 w-[200px] md:w-[300px] rounded-lg overflow-hidden shadow-2xl hidden md:block"
-              initial={{ opacity: 0, scale: 0.8 }}
+              className="fixed pointer-events-none z-50 w-[180px] md:w-[260px] rounded-2xl overflow-hidden shadow-2xl hidden md:block"
+              initial={{ opacity: 0, scale: 0.85 }}
               animate={{
                 opacity: 1,
                 scale: 1,
-                x: mousePosition.x + 20,
-                y: mousePosition.y - 100,
+                x: mousePosition.x + 24,
+                y: mousePosition.y - 120,
               }}
-              exit={{ opacity: 0, scale: 0.8 }}
+              exit={{ opacity: 0, scale: 0.85 }}
               transition={{ duration: 0.2 }}
             >
               <img
-                src={articles[hoveredIndex].image || "/placeholder.svg"}
-                alt={articles[hoveredIndex].title}
-                className="w-full h-auto"
+                src={tips[hoveredIndex].image}
+                alt={tips[hoveredIndex].title}
+                className="w-full h-[220px] object-cover object-top"
               />
             </motion.div>
           )}
